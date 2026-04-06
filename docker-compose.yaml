@@ -1,17 +1,18 @@
 services:
   jenkins:
-    # Sử dụng image chính chủ bản LTS mới nhất chạy trên JDK 17
     image: jenkins/jenkins:lts-jdk21
     container_name: jenkins
     restart: unless-stopped
     privileged: true
     user: root
     ports:
-      - "8081:8080"   # Truy cập qua localhost:8081
-      - "50000:50000" # Cổng cho Jenkins Agent
+      - "8081:8080"
+      - "50000:50000"
     volumes:
       - jenkins_home:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - DOCKER_HOST=unix:///var/run/docker.sock
 
 volumes:
   jenkins_home:
